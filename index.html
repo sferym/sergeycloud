@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Моё Облако</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f7;
+      margin: 0;
+      padding: 0;
+      color: #1d1d1f;
+    }
+    header {
+      background: #ffffff;
+      padding: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.2em;
+    }
+    .container {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    }
+    .upload {
+      text-align: center;
+      padding: 20px;
+      border: 2px dashed #d2d2d7;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .upload:hover {
+      background: #f0f0f3;
+    }
+    input[type=file] {
+      display: none;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .btn {
+      background: #007aff;
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn:hover {
+      background: #005ecb;
+    }
+  </style>
+</head>
+<body>
+  <header>☁️ Моё Облако</header>
+  <div class="container">
+    <label class="upload">
+      <input type="file" id="fileInput" multiple>
+      Нажми или перетащи файлы сюда
+    </label>
+    <ul id="fileList"></ul>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const fileList = document.getElementById('fileList');
+    let storedFiles = [];
+
+    fileInput.addEventListener('change', () => {
+      [...fileInput.files].forEach(file => {
+        storedFiles.push(file);
+
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span>${file.name}</span>
+          <button class="btn" onclick="downloadFile('${file.name}')">Скачать</button>
+        `;
+        fileList.appendChild(li);
+      });
+    });
+
+    function downloadFile(name) {
+      const file = storedFiles.find(f => f.name === name);
+      if (file) {
+        const url = URL.createObjectURL(file);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = file.name;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    }
+  </script>
+</body>
+</html>
