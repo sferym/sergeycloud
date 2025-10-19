@@ -3,110 +3,130 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Моё Облако</title>
+  <title>Подключение DEKO TV</title>
   <style>
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #f5f5f7;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #141E30, #243B55);
+      color: #fff;
       margin: 0;
       padding: 0;
-      color: #1d1d1f;
     }
+
     header {
-      background: #ffffff;
-      padding: 15px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
       text-align: center;
-      font-weight: 600;
-      font-size: 1.2em;
+      padding: 50px 20px 20px;
     }
-    .container {
-      max-width: 600px;
-      margin: 30px auto;
-      padding: 20px;
-      background: #fff;
-      border-radius: 14px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #00b7ff;
     }
-    .upload {
-      text-align: center;
-      padding: 20px;
-      border: 2px dashed #d2d2d7;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: 0.2s;
+
+    header p {
+      font-size: 1.1em;
+      color: #ddd;
     }
-    .upload:hover {
-      background: #f0f0f3;
+
+    form {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     }
-    input[type=file] {
-      display: none;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      margin-top: 20px;
-    }
-    li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-      border-bottom: 1px solid #eee;
-    }
-    .btn {
-      background: #007aff;
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
       color: #fff;
-      border: none;
-      padding: 6px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.2s;
     }
-    .btn:hover {
-      background: #005ecb;
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border: none;
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #333;
+      font-size: 1em;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 25px;
+      background: linear-gradient(90deg, #00b7ff, #0078d7);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #00e0ff, #0099ff);
+      transform: scale(1.03);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #bbb;
+      font-size: 0.9em;
     }
   </style>
 </head>
 <body>
-  <header>☁️ Моё Облако</header>
-  <div class="container">
-    <label class="upload">
-      <input type="file" id="fileInput" multiple>
-      Нажми или перетащи файлы сюда
-    </label>
-    <ul id="fileList"></ul>
-  </div>
+
+  <header>
+    <h1>Подключение DEKO TV</h1>
+    <p>Подключитесь к лучшему телевидению за минуту</p>
+  </header>
+
+  <form id="connectForm">
+    <label for="brand">Компания приставки / телевизора</label>
+    <input type="text" id="brand" name="brand" placeholder="Например: Samsung, LG, Xiaomi" required>
+
+    <label for="model">Модель</label>
+    <input type="text" id="model" name="model" placeholder="Введите модель устройства" required>
+
+    <label for="quality">Желаемое качество видео</label>
+    <select id="quality" name="quality" required>
+      <option value="">Выберите качество</option>
+      <option>HD</option>
+      <option>Full HD</option>
+      <option>4K</option>
+      <option>8K</option>
+    </select>
+
+    <label for="antenna">Тип антенны</label>
+    <select id="antenna" name="antenna" required>
+      <option value="">Выберите тип</option>
+      <option>Кабель</option>
+      <option>Спутник</option>
+      <option>Эфирная</option>
+    </select>
+
+    <button type="submit">Подключить</button>
+  </form>
+
+  <footer>
+    © 2025 DEKO TV. Все права защищены.
+  </footer>
 
   <script>
-    const fileInput = document.getElementById('fileInput');
-    const fileList = document.getElementById('fileList');
-    let storedFiles = [];
-
-    fileInput.addEventListener('change', () => {
-      [...fileInput.files].forEach(file => {
-        storedFiles.push(file);
-
-        const li = document.createElement('li');
-        li.innerHTML = `
-          <span>${file.name}</span>
-          <button class="btn" onclick="downloadFile('${file.name}')">Скачать</button>
-        `;
-        fileList.appendChild(li);
-      });
+    document.getElementById("connectForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      alert("Спасибо! Ваша заявка на подключение DEKO TV отправлена.");
     });
-
-    function downloadFile(name) {
-      const file = storedFiles.find(f => f.name === name);
-      if (file) {
-        const url = URL.createObjectURL(file);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = file.name;
-        a.click();
-        URL.revokeObjectURL(url);
-      }
-    }
   </script>
+
 </body>
 </html>
